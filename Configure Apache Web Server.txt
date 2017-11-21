@@ -40,6 +40,60 @@ if __name__ == "__main__":
 
 13. Save the changes to the file with ctrl+x and then press 'Y'
 
+14. Now we will create a Virtual Environment and install Flask on it
+
+15. Run following command to setup the virtual environment :
+$ sudo virtualenv venv
+16. Activate the Virtual environment using following command:
+$ source venv/bin/activate
+17. Once inside the Virtual environment, theprompt should look like :
+(venv) [*** TestFlaskApp]$
+18. Install Flask in the Virtual environment using pip :
+$ sudo pip install Flask
+19.To check if everything working as expected execute command :
+$ sudo python __init__.py
+The result should be like following :
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+20. Now hit ctrl+c and execute deactivate command to stop virtual environment
+$ deactivate
+21. Now to access this website outside of the server using Apache web server, we need to write Flask configuration file and wsgi file.
+22. create Flask configuration file at location /etc/httpd/conf.d/TestFlaskApp.conf :
+$ sudo nano /etc/httpd/conf.d/TestFlaskApp.conf
+
+<VirtualHost *:80>
+        ServerName <server domain name or IP Address>
+        ServerAdmin <email@email.com>
+        WSGIScriptAlias / /var/www/TestFlaskApp/testflaskapp.wsgi
+        <Directory /var/www/TestFlaskApp/TestFlaskApp/>
+                order allow,deny
+                Allow from all
+        </Directory>
+        Alias /static /var/www/TestFlaskApp/TestFlaskApp/static
+        <Directory /var/www/TestFlaskApp/TestFlaskApp/static/>
+                Order allow,deny
+                Allow from all
+        </Directory>
+</VirtualHost>
+
+23. Restart Apache service :
+$ sudo service httpd restart
+24. Configure WSGI file for the application at location /var/www/TestFlaskApp/testflaskapp.wsgi:
+$ sudo nano /var/www/TestFlaskApp/testflaskapp.wsgi 
+Update testflaskapp.wsgi file with following script and save it.
+
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/TestFlaskApp/")
+
+from TestFlaskApp import app as application
+
+25. Restart Apache service.
+
+26. Now access the website from outside using http://<ipaddress>
+
+
 
 
 
