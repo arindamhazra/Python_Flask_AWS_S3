@@ -1,0 +1,45 @@
+1. SSH to the Linux Server and login
+2. Perform an update to bring the server to latest patch/firmware level using following:
+$ sudo yum update -y
+3. Install Python27,pip,Apache,Git,GCC on the server using - 
+$ sudo yum install python27 python27-pip httpd24 mod_wsgi git gcc -y 
+4.Perform an update using:
+$ sudo yum update -y
+5. Start Apache Daemon on the server using : $ sudo service httpd start
+6. Configure httpd to start automatically after restart:
+$ sudo chkconfig httpd on
+7. It is a good practice to create a virtual environment of Python on the development server.Therefore, any component installed and changed with in the Virtual Environment, will not have any impact on the Python installation and configuration of the server.
+install Virtual environment using python pip :
+$ sudo pip install virtualenv
+8. Now start working on the actual Python web project using Flask.
+Browse to path /var/www
+$ cd /var/www
+9. Create a Directory to host the project ,Example, TestFlaskApp.
+$ sudo mkdir TestFlaskApp
+Then browse to that path using : cd /TestFlaskApp
+10. Now create a directory for the actual Application, for example, TestFlaskApp
+$ sudo mkdir TestFlaskApp . Then browse to that path using : cd /TestFlaskApp
+11. Create 2 more folders respectively :
+ $ sudo mkdir templates //This directory contains static HTML pages and Templates
+$sudo mkdir static //This directory contains HTML Style sheet,Javascripts,Images etc.
+12. Now create our main application file for the application __init__.py :
+sudo nano __init__.py
+
+In the nano editor enter following python script to do a small test:
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run()
+
+13. Save the changes to the file with ctrl+x and then press 'Y'
+
+
+
+
