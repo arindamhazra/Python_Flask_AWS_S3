@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
+app.config.from_object("base_config")
 
 @app.route("/")
 def home():
-    return "Hello World!"
+    return render_template("index.html")
 
 app.run()
